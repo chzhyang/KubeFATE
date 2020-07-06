@@ -11,12 +11,6 @@ jobs:
       run: |
         echo "start time:"
         date
-        mkdir -p /data/projects/fate
-        echo "check file:"
-        ls -l /data/projects/fate
-        echo "check images"
-        docker ps
-        pwd
         cd ./docker-deploy
         pwd
         bash generate_config.sh
@@ -28,6 +22,6 @@ jobs:
     # - name: docker deploy
     #     run: |
     #     bash docker_deploy.sh all
-    #     docker exec -it confs-10000_python_1 bash
+    #     docker exec -it confs-10000_python_1 bashß
     #     docker exec -it confs-10000_python_1 bash
     #     python run_toy_example.py 10000 1
