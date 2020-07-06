@@ -8,6 +8,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: generate config
+      if: success()
       run: |
         cd ./docker-deploy
         bash generate_config.sh
@@ -20,7 +21,9 @@ jobs:
 #          MY_NAME: "Mona"
 
     - name: docker deploy
-        run: |
+      if: success()
+      run: |
+        id
         sudo mkdir -p /data/projects/fate
         echo "view docker-compose deployment directory:"
         ls -l /data/projects
