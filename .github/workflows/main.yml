@@ -1,0 +1,24 @@
+name: A workflow for docker deploy
+on: push
+jobs:
+  build:
+    name: Docker deploy action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: generate config
+      run: |
+        pwd
+        cd ./docker-deploy
+        bash generate_config.sh
+        ls /data/projects/
+#      - uses: ./action-dockerdeploy
+#        with:
+#          MY_NAME: "Mona"
+    # - name: docker deploy
+    #     run: |
+    #     bash docker_deploy.sh all
+    #     docker exec -it confs-10000_python_1 bash
+    #     docker exec -it confs-10000_python_1 bash
+    #     python run_toy_example.py 10000 1
