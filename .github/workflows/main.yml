@@ -9,16 +9,19 @@ jobs:
 
     - name: generate config
       run: |
-        echo "start time:"
-        date
         cd ./docker-deploy
-        pwd
         bash generate_config.sh
         echo "check output:"
-        ls
+        ls ./output
 #      - uses: ./action-dockerdeploy
 #        with:
 #          MY_NAME: "Mona"
+    - name: docker compose test
+      run : |
+        docker-compose --version
+        sudo mkdir -p /data/projects/fate
+        ls -l /data/projects/fate
+        
     # - name: docker deploy
     #     run: |
     #     bash docker_deploy.sh all
