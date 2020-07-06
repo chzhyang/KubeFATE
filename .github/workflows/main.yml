@@ -11,7 +11,7 @@ jobs:
       run: |
         echo "start time:"
         date
-        mkdir /data/projects/fate
+        mkdir -p /data/projects/fate
         echo "check file:"
         ls -l /data/projects/fate
         echo "check images"
