@@ -13,18 +13,22 @@ jobs:
         bash generate_config.sh
         echo "check output:"
         ls ./outputs
+        echo "check user:"
+        id
 #      - uses: ./action-dockerdeploy
 #        with:
 #          MY_NAME: "Mona"
-    - name: docker compose test
-      run : |
-        docker-compose --version
-        sudo mkdir -p /data/projects/fate
-        ls -l /data/projects/fate
 
-    # - name: docker deploy
-    #     run: |
-    #     bash docker_deploy.sh all
-    #     docker exec -it confs-10000_python_1 bashß
-    #     docker exec -it confs-10000_python_1 bash
-    #     python run_toy_example.py 10000 1
+    - name: docker deploy
+        run: |
+        sudo mkdir -p /data/projects/fate
+        echo "view docker-compose deployment directory:"
+        ls -l /data/projects
+        echo "docker-compose begin:"
+        bash docker_deploy.sh all
+        echo "check containers"
+        docker ps
+        echo "run_toy_example:"
+        docker exec -it confs-10000_python_1 bash
+        cd /data/projects/fate/python/examples/toy_example/
+        python run_toy_example.py 10000 1000 1
