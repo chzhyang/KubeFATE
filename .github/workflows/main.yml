@@ -14,8 +14,7 @@ jobs:
         bash generate_config.sh
         echo "check output:"
         ls ./outputs
-        echo "check user:"
-        id
+        cd ../
 #      - uses: ./action-dockerdeploy
 #        with:
 #          MY_NAME: "Mona"
@@ -23,11 +22,9 @@ jobs:
     - name: docker deploy
       if: success()
       run: |
-        id
         sudo mkdir -p /data/projects/fate
-        echo "view docker-compose deployment directory:"
-        ls -l /data/projects
         echo "docker-compose begin:"
+        cd ./docker-deploy
         bash docker_deploy.sh all
         echo "check containers"
         docker ps
