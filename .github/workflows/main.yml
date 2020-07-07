@@ -24,13 +24,15 @@ jobs:
       run: |
         # get host ip
         ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' 
+        # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
+        
         # sudo mkdir -p /data/projects/fate
         # echo "docker-compose begin:"
-        # cd ./docker-deploy
-        # bash docker_deploy.sh all
-        # echo "check containers"
-        # docker ps
-        # echo "run_toy_example:"
-        # docker exec -it confs-10000_python_1 bash
-        # cd /data/projects/fate/python/examples/toy_example/
-        # python run_toy_example.py 10000 1000 1
+        cd ./docker-deploy
+        bash docker_deploy.sh all
+        echo "check containers"
+        docker ps
+        echo "run_toy_example:"
+        docker exec -it confs-10000_python_1 bash
+        cd /data/projects/fate/python/examples/toy_example/
+        python run_toy_example.py 10000 1000 1

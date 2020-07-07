@@ -1,12 +1,12 @@
 name: "Docker Deploy Actions"
-description: "docker deploy"
+description: "docker deploy using docker compose"
 author: ""
 
-inputs:
-  MY_NAME:
-    description: "Who to greet"
-    required: true
-    default: "World"
+#inputs:
+#  MY_NAME:
+#    description: "Who to greet"
+#    required: true
+#    default: "World"
 
 runs:
   using: "docker"
