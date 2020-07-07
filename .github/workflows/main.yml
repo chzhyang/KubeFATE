@@ -22,8 +22,8 @@ jobs:
     - name: docker deploy
       if: success()
       run: |
-        # test ipconfig
-        ifconfig
+        # get host ip
+        ifconfig eth0 | grep inet | awk '{ print $2}' | awk -F: '{print $2}'
         # sudo mkdir -p /data/projects/fate
         # echo "docker-compose begin:"
         # cd ./docker-deploy
