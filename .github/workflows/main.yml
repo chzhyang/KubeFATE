@@ -23,7 +23,7 @@ jobs:
       if: success()
       run: |
         # test ipconfig
-        ipconfig
+        ifconfig
         # sudo mkdir -p /data/projects/fate
         # echo "docker-compose begin:"
         # cd ./docker-deploy
