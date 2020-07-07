@@ -3,7 +3,6 @@ on: push
 jobs:
   build:
     name: Docker deploy action
-    description: "docker deploy on a single machine using docker compose."
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -42,7 +41,7 @@ jobs:
 
         echo "Check containers:"
         docker ps
-        
+
         echo "Run toy_example:"
         docker exec -it confs-10000_python_1 bash
         cd /data/projects/fate/python/examples/toy_example/
