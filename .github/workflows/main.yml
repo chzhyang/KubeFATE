@@ -23,7 +23,8 @@ jobs:
       if: success()
       run: |
         # get host ip
-        ifconfig eth0 | grep inet | awk '{ print $2}' | awk -F: '{print $2}'
+        VAR = "eth0"
+        ifconfig $VAR | grep "inet" | grep -v inet6 | awk '{ print $2}' 
         # sudo mkdir -p /data/projects/fate
         # echo "docker-compose begin:"
         # cd ./docker-deploy
