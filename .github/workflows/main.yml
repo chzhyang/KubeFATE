@@ -10,9 +10,10 @@ jobs:
     - name: generate config
       if: success()
       run: |
+        echo "#generate config:"
         cd ./docker-deploy
         bash generate_config.sh
-        echo "check output:"
+        echo "#check output:"
         ls ./outputs
         cd ../
 #      - uses: ./action-dockerdeploy
@@ -27,22 +28,22 @@ jobs:
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
         
         sudo mkdir -p /data/projects/fate
-        echo "docker-compose begin:"
+        echo "#docker-compose begin"
         echo "Enter ./docker-deploy"
         cd ./docker-deploy
 
-        echo "replace scp with cp, delete ssh:"
+        echo "#replace scp with cp, delete ssh"
         cp docker_deploy.sh docker_deploy.sh.bk
         sed -i "s/scp \${/cp \${/g" docker_deploy.sh
         sed -i "/eeooff/d" docker_deploy.sh
     
-        echo "Run deploy shell:"
+        echo "#Run deploy shell"
         bash docker_deploy.sh all
 
-        echo "Check containers:"
+        echo "#Check containers"
         docker ps
 
-        echo "Run toy_example:"
+        echo "#Run toy_example"
         docker exec -it confs-10000_python_1 bash
         cd /data/projects/fate/python/examples/toy_example/
         python run_toy_example.py 10000 1000 1
