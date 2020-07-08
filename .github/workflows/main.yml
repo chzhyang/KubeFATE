@@ -10,6 +10,7 @@ jobs:
     - name: generate config
       if: success()
       run: |
+        pwd
         echo "#generate config:"
         cd ./docker-deploy
         bash generate_config.sh
@@ -19,7 +20,7 @@ jobs:
 #      - uses: ./action-dockerdeploy
 #        with:
 #          MY_NAME: ""
-
+#####
     - name: docker deploy
       if: success()
       run: |
