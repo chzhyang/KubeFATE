@@ -23,10 +23,11 @@ jobs:
     - name: docker deploy
       if: success()
       run: |
-        ### get host ip
+        echo "test"
+        # get host ip
         HOSTIP=ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' 
         echo "Host IP: "$HOSTIP
-        ## ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
+        # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
         
         sudo mkdir -p /data/projects/fate
         echo "#docker-compose begin"
