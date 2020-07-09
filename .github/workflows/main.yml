@@ -26,19 +26,22 @@ jobs:
         # get host ip
         ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' 
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
-        
+        # ifconfig ens160 | grep "inet" | grep -v inet6 | awk '{ print $2}'
         sudo mkdir -p /data/projects/fate
         echo "#docker-compose begin"
         echo "Enter ./docker-deploy"
         cd ./docker-deploy
-
-        echo "#replace scp with cp, delete ssh"
-        cp docker_deploy.sh docker_deploy.sh.bk
-        sed -i "s/scp \${/cp \${/g" docker_deploy.sh
-        sed -i "/eeooff/d" docker_deploy.sh
+        target_party_id=10000
+        target_party_ip=
+        cp ./outputs/confs-${target_party_id}.tar /confs-${target_party_id}
+        rm -f ${WORKINGDIR}/outputs/confs-$target_party_id.tar
+        # echo "#replace scp with cp, delete ssh"
+        # cp docker_deploy.sh docker_deploy.sh.bk
+        # sed -i "s/scp \${/cp \${/g" docker_deploy.sh
+        # sed -i "/eeooff/d" docker_deploy.sh
     
-        echo "#Run deploy shell"
-        bash docker_deploy.sh all
+        # echo "#Run deploy shell"
+        # bash docker_deploy.sh all
 
         echo "#Check containers"
         docker ps
