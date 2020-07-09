@@ -33,8 +33,9 @@ jobs:
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' `
         sudo mkdir -p $dir
-        ll $dir
+        ls -l $dir
 
+        echo "#deploy party"
         rm -f $dir/confs-$target_party_id.tar
         sudo cp ./outputs/confs-$target_party_id.tar $dir/
         rm -f ./outputs/confs-$target_party_id.tar
