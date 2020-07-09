@@ -10,6 +10,9 @@ jobs:
     - name: generate config
       if: success()
       run: |
+        echo "#change parties.conf"
+        host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
+        
         echo "#generate config:"
         cd ./docker-deploy
         bash generate_config.sh
@@ -23,8 +26,7 @@ jobs:
     - name: docker deploy
       if: success()
       run: |
-        # get host ip
-        ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' 
+        
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
         
         echo "#docker-compose begin"
@@ -35,24 +37,25 @@ jobs:
         sudo mkdir -p $dir
 
         echo "#deploy party"
-        rm -f $dir/confs-$target_party_id.tar
+        sudo rm -f $dir/confs-$target_party_id.tar
         sudo cp ./outputs/confs-$target_party_id.tar $dir/
         rm -f ./outputs/confs-$target_party_id.tar
         echo "$target_party_ip training cluster copy is ok!"
 
         cd $dir
         sudo tar -xzf confs-$target_party_id.tar
+        ls -l $dir
         cd confs-$target_party_id
         docker-compose down
         docker volume rm -f confs-${target_party_id}_shared_dir_examples
         docker volume rm -f confs-${target_party_id}_shared_dir_federatedml
         docker-compose up -d
         cd ../
-        rm -f confs-${target_party_id}.tar
+        sudo rm -f confs-${target_party_id}.tar
         echo "party ${target_party_id} deploy is ok!"
         
         echo "deploy serving"
-        rm -f $dir/serving-$target_party_id.tar
+        sudo rm -f $dir/serving-$target_party_id.tar
         sudo cp ./outputs/serving-$target_party_id.tar $dir/
         rm -f ./outputs/serving-$target_party_id.tar
         echo "party $target_party_id serving cluster copy is ok!"
@@ -63,7 +66,7 @@ jobs:
         docker-compose down
         docker-compose up -d
         cd ../
-        rm -f serving-$target_party_id.tar
+        sudo rm -f serving-$target_party_id.tar
         echo "party $target_party_id serving cluster deploy is ok!"
 
         # echo "#replace scp with cp, delete ssh"
