@@ -10,13 +10,18 @@ jobs:
     - name: generate config
       if: success()
       run: |
-        echo "#change parties.conf"
-        host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
-        
-        echo "#generate config:"
+        echo "# single conf prepare"
         cd ./docker-deploy
+        host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
+        sed -i "s/user=fate/user=root/g" ./parties.conf
+        sed -i "s/partylist=(10000 9999)/partylist=(10000)/g" ./parties.conf
+        sed -i "s/partyiplist=(192.168.1.1 192.168.1.2)/partyiplist=(${host_ip})/g" ./parties.conf
+        sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
+        echo "# single conf prepare is ok"
+        
+        echo "# generate config:"
         bash generate_config.sh
-        echo "#check outputs:"
+        echo "#check ./docker-deploy/outputs:"
         ls ./outputs
         cd ../
 #      - uses: ./action-dockerdeploy
@@ -27,7 +32,7 @@ jobs:
       if: success()
       run: |
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
-        echo "# conf begin"
+        #source ./docker-deploy/parties.conf
         dir=/data/projects/fate
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
@@ -52,7 +57,7 @@ jobs:
         sudo docker volume rm -f confs-${target_party_id}_shared_dir_federatedml
         sudo docker-compose up -d
         cd ../
-        rm -f confs-${target_party_id}.tar
+        sudo rm -f confs-${target_party_id}.tar
         echo "# party ${target_party_id} training cluster deploy is ok!"
         
         echo "# serving cluster deploy begin"
