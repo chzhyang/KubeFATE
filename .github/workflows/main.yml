@@ -27,40 +27,41 @@ jobs:
       if: success()
       run: |
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
-        
-        echo "# training cluster and serving cluster copy begin"
-        cd ./docker-deploy
-        dir=./fate
-        mkdir -p $dir
+        echo "# conf begin"
+        dir=/data/projects/fate
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
-        rm -f $dir/confs-$target_party_id.tar $dir/serving-$target_party_id.tar
-        cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
-        rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
+        sudo mkdir -p $dir
+        sudo rm -f $dir/confs-$target_party_id.tar $dir/serving-$target_party_id.tar
+        echo "# conf is ok"
+
+        echo "# training cluster and serving cluster copy begin"
+        cd ./docker-deploy
+        sudo cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
+        sudo rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
         echo "# training cluster and serving cluster copy is ok!"
         
         
-        cd $dir
 
         echo "# training cluster deploy begin"
-        tar -xzf confs-$target_party_id.tar
-        ls -l
+        cd $dir
+        sudo tar -xzf confs-$target_party_id.tar
         cd confs-$target_party_id
-        docker-compose down
-        docker volume rm -f confs-${target_party_id}_shared_dir_examples
-        docker volume rm -f confs-${target_party_id}_shared_dir_federatedml
-        docker-compose up -d
+        sudo docker-compose down
+        sudo docker volume rm -f confs-${target_party_id}_shared_dir_examples
+        sudo docker volume rm -f confs-${target_party_id}_shared_dir_federatedml
+        sudo docker-compose up -d
         cd ../
         rm -f confs-${target_party_id}.tar
         echo "# party ${target_party_id} training cluster deploy is ok!"
         
         echo "# serving cluster deploy begin"
-        tar -xzf serving-$target_party_id.tar
+        sudo tar -xzf serving-$target_party_id.tar
         cd serving-$target_party_id
-        docker-compose down
-        docker-compose up -d
+        sudo docker-compose down
+        sudo docker-compose up -d
         cd ../
-        rm -f serving-$target_party_id.tar
+        sudo rm -f serving-$target_party_id.tar
         echo "# party $target_party_id serving cluster deploy is ok!"
 
         # echo "#replace scp with cp, delete ssh"
@@ -70,9 +71,9 @@ jobs:
         # echo "#Run deploy shell"
         # bash docker_deploy.sh all
 
-        docker ps
+        sudo docker ps
 
         echo "# toy_example test"
-        docker exec -it confs-10000_python_1 bash
+        sudo docker exec -it confs-${target_party_id}_python_1 bash
         cd $dir/python/examples/toy_example/
-        python run_toy_example.py 10000 1000 1
+        sudo python run_toy_example.py ${target_party_id} ${target_party_id} 1
