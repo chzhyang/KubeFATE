@@ -33,7 +33,6 @@ jobs:
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' `
         sudo mkdir -p $dir
-        ls -l /data/projects
 
         echo "#deploy party"
         rm -f $dir/confs-$target_party_id.tar
@@ -42,7 +41,7 @@ jobs:
         echo "$target_party_ip training cluster copy is ok!"
 
         cd $dir
-        tar -xzf confs-$target_party_id.tar
+        sudo tar -xzf confs-$target_party_id.tar
         cd confs-$target_party_id
         docker-compose down
         docker volume rm -f confs-${target_party_id}_shared_dir_examples
@@ -59,7 +58,7 @@ jobs:
         echo "party $target_party_id serving cluster copy is ok!"
 
         cd $dir
-        tar -xzf serving-$target_party_id.tar
+        sudo tar -xzf serving-$target_party_id.tar
         cd serving-$target_party_id
         docker-compose down
         docker-compose up -d
@@ -80,5 +79,5 @@ jobs:
 
         echo "#Run toy_example"
         docker exec -it confs-10000_python_1 bash
-        cd /data/projects/fate/python/examples/toy_example/
+        cd $dir/python/examples/toy_example/
         python run_toy_example.py 10000 1000 1
