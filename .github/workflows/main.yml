@@ -30,13 +30,13 @@ jobs:
         echo "#docker-compose begin"
         cd ./docker-deploy
         dir=/data/projects/fate
-        sudo mkdir -p $dir
-        ls -a $dir
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' `
-        
+        sudo mkdir -p $dir
+        ll $dir
+
         rm -f $dir/confs-$target_party_id.tar
-        cp ./outputs/confs-$target_party_id.tar $dir/
+        sudo cp ./outputs/confs-$target_party_id.tar $dir/
         rm -f ./outputs/confs-$target_party_id.tar
         echo "$target_party_ip training cluster copy is ok!"
 
@@ -53,7 +53,7 @@ jobs:
         
         echo "deploy serving"
         rm -f $dir/serving-$target_party_id.tar
-        cp ./outputs/serving-$target_party_id.tar $dir/
+        sudo cp ./outputs/serving-$target_party_id.tar $dir/
         rm -f ./outputs/serving-$target_party_id.tar
         echo "party $target_party_id serving cluster copy is ok!"
 
@@ -65,7 +65,7 @@ jobs:
         cd ../
         rm -f serving-$target_party_id.tar
         echo "party $target_party_id serving cluster deploy is ok!"
-        
+
         # echo "#replace scp with cp, delete ssh"
         # cp docker_deploy.sh docker_deploy.sh.bk
         # sed -i "s/scp \${/cp \${/g" docker_deploy.sh
