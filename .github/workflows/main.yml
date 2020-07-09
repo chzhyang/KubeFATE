@@ -28,7 +28,7 @@ jobs:
       run: |
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
         
-        echo "#training cluster and serving cluster copy begin"
+        echo "# training cluster and serving cluster copy begin"
         cd ./docker-deploy
         dir=./fate
         mkdir -p $dir
@@ -44,7 +44,7 @@ jobs:
 
         echo "# training cluster deploy begin"
         tar -xzf confs-$target_party_id.tar
-        ls -l $dir
+        ls -l
         cd confs-$target_party_id
         docker-compose down
         docker volume rm -f confs-${target_party_id}_shared_dir_examples
