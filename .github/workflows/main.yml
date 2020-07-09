@@ -31,6 +31,7 @@ jobs:
     - name: docker deploy
       if: success()
       run: |
+        echo "# conf prepare"
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
         # source ./docker-deploy/parties.conf
         dir=/data/projects/fate
@@ -41,7 +42,6 @@ jobs:
         echo "# conf is ok!"
 
         echo "# training cluster and serving cluster copy begin"
-        source 
         cd ./docker-deploy
         sudo cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
         sudo rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
