@@ -10,14 +10,14 @@ jobs:
     - name: generate config
       if: success()
       run: |
-        echo "# single conf prepare"
+        echo "# conf prepare"
         cd ./docker-deploy
         host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
         sed -i "s/user=fate/user=root/g" ./parties.conf
         sed -i "s/partylist=(10000 9999)/partylist=(10000)/g" ./parties.conf
         sed -i "s/partyiplist=(192.168.1.1 192.168.1.2)/partyiplist=(${host_ip})/g" ./parties.conf
         sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
-        echo "# single conf prepare is ok"
+        echo "# conf prepare is ok"
         
         echo "# generate config:"
         bash generate_config.sh
@@ -32,15 +32,16 @@ jobs:
       if: success()
       run: |
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
-        #source ./docker-deploy/parties.conf
-        dir=/data/projects/fate
+        source ./docker-deploy/parties.conf
+        #dir=/data/projects/fate
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
         sudo mkdir -p $dir
         sudo rm -f $dir/confs-$target_party_id.tar $dir/serving-$target_party_id.tar
-        echo "# conf is ok"
+        echo "# conf is ok!"
 
         echo "# training cluster and serving cluster copy begin"
+        source 
         cd ./docker-deploy
         sudo cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
         sudo rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
@@ -71,15 +72,16 @@ jobs:
         # cp docker_deploy.sh docker_deploy.sh.bk
         # sed -i "s/scp \${/cp \${/g" docker_deploy.sh
         # sed -i "/eeooff/d" docker_deploy.sh
-        # echo "#Run deploy shell"
+        # echo "# Run deploy shell"
         # bash docker_deploy.sh all
 
         sudo docker ps
-    
-    - name: toy example test
-      if: success()
-      run: |
+
         echo "# toy_example test"
-        sudo docker exec -it confs-${target_party_id}_python_1 bash
-        cd $dir/python/examples/toy_example/
-        sudo python run_toy_example.py ${target_party_id} ${target_party_id} 1
+        sudo docker exec confs-10000_python_1 bash -c "python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
+    # - name: toy example test
+    #   if: success()
+    #   run: |
+    #     echo "# toy_example test"
+    #     sudo docker exec confs-10000_python_1 bash -c "python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
+        
