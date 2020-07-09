@@ -32,8 +32,8 @@ jobs:
       if: success()
       run: |
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
-        source ./docker-deploy/parties.conf
-        #dir=/data/projects/fate
+        # source ./docker-deploy/parties.conf
+        dir=/data/projects/fate
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
         sudo mkdir -p $dir
