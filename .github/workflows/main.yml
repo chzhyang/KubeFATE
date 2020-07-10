@@ -77,15 +77,16 @@ jobs:
         # bash docker_deploy.sh all
 
         sleep 30s
+        sudo docker ps
         for ((i=1; i<=100; i ++))
         do
             echo "# $i"
-            docker logs config-10000_python_1 | grep "Running on http://0.0.0.0:9380/"
+            docker logs confs-10000_python_1 | grep "Running on http://0.0.0.0:9380/"
         done
 
         
         
-        sudo docker ps
+        
         #docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
         sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
