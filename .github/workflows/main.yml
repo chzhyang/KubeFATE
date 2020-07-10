@@ -7,13 +7,14 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: generate config
+    - name: docker deploy
       if: success()
       run: |
         echo "# conf prepare"
         cd ./docker-deploy
         host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
         sed -i "s/user=fate/user=root/g" ./parties.conf
+        sed -i "s/mysql_user=root/mysql_user=fate/g" ./parties.conf
         sed -i "s/partylist=(10000 9999)/partylist=(10000)/g" ./parties.conf
         sed -i "s/partyiplist=(192.168.1.1 192.168.1.2)/partyiplist=(${host_ip})/g" ./parties.conf
         sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
@@ -25,14 +26,13 @@ jobs:
         echo "#check ./docker-deploy/outputs"
         ls ./outputs
         cd ../
-#      - uses: ./action-dockerdeploy
-#        with:
-#          MY_NAME: "Mona"
+
 
     - name: docker deploy
       if: success()
       run: |
         echo "# conf prepare"
+        
         # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
         # source ./docker-deploy/parties.conf
         dir=/data/projects/fate
@@ -44,6 +44,7 @@ jobs:
 
         echo "# training cluster and serving cluster copy begin"
         cd ./docker-deploy
+        cat parties.conf
         sudo cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
         sudo rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
         echo "# training cluster and serving cluster copy is ok!"
