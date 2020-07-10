@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: docker deploy
+    - name: generate conf
       if: success()
       run: |
         echo "# conf prepare"
