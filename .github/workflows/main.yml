@@ -74,7 +74,8 @@ jobs:
         # sed -i "/eeooff/d" docker_deploy.sh
         # echo "# Run deploy shell"
         # bash docker_deploy.sh all
-
+        
+        sleep 60s
         sudo docker ps
         #docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
