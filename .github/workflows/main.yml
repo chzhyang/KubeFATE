@@ -80,7 +80,7 @@ jobs:
         for ((i=1; i<=100; i ++))
         do
             echo "# $i"
-            docker log config_10000_python
+            docker logs config_10000_python
         done
 
         
