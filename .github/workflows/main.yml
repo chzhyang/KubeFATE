@@ -81,7 +81,7 @@ jobs:
         for ((i=1; i<=100; i ++))
         do
             echo "# $i"
-            docker logs confs-10000_python_1 | grep "Running on http://0.0.0.0:9380/"
+            docker logs confs-10000_python_1
         done
 
         
