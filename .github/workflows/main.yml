@@ -17,6 +17,7 @@ jobs:
         sed -i "s/partylist=(10000 9999)/partylist=(10000)/g" ./parties.conf
         sed -i "s/partyiplist=(192.168.1.1 192.168.1.2)/partyiplist=(${host_ip})/g" ./parties.conf
         sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
+        cat ./parties.conf
         echo "# conf prepare is ok"
         
         echo "# generate config"
