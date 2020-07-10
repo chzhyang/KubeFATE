@@ -75,11 +75,16 @@ jobs:
         # echo "# Run deploy shell"
         # bash docker_deploy.sh all
 
-        sleep 60s
+        sleep 30s
         sudo docker ps
         #docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
         sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
+        
+        sleep 20s
+        sudo docker ps
+        sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
+
         echo "test is ok!"
     # - name: toy example test
     #   if: success()
