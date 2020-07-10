@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: generate conf
+    - name: generate config
       if: success()
       run: |
         echo "# config prepare"
@@ -68,8 +68,9 @@ jobs:
         echo "# sleep 30s, then check containers"
         sleep 30s
         sudo docker ps
-
-        # docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
+    - name: toy example test
+      if: success()
+      run: |
         echo "# toy_example test"
         sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"        
         echo "# test is ok!"
