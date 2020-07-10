@@ -13,8 +13,7 @@ jobs:
         echo "# conf prepare"
         cd ./docker-deploy
         host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
-        sed -i "s/user=fate/user=root/g" ./parties.conf
-        sed -i "s/mysql_user=root/mysql_user=fate/g" ./parties.conf
+        sed -i "/mysql_user=fate/ ! s/user=fate/user=root/g" ./parties.conf
         sed -i "s/partylist=(10000 9999)/partylist=(10000)/g" ./parties.conf
         sed -i "s/partyiplist=(192.168.1.1 192.168.1.2)/partyiplist=(${host_ip})/g" ./parties.conf
         sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
@@ -44,7 +43,7 @@ jobs:
 
         echo "# training cluster and serving cluster copy begin"
         cd ./docker-deploy
-        cat parties.conf
+        # cat parties.conf
         sudo cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
         sudo rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
         echo "# training cluster and serving cluster copy is ok!"
@@ -79,16 +78,13 @@ jobs:
 
         sleep 30s
         sudo docker ps
-        for ((i=1; i<=100; i ++))
-        do
-            echo "# $i"
-            docker logs confs-10000_python_1
-        done
+        # for ((i=1; i<=100; i ++))
+        # do
+        #     echo "# $i"
+        #     docker logs confs-10000_python_1
+        # done
 
-        
-        
-        
-        #docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
+        # docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
         sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
         
