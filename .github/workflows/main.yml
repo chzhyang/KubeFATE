@@ -76,7 +76,7 @@ jobs:
         # bash docker_deploy.sh all
 
         sudo docker ps
-
+        docker exec 9f92869753a5 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
         sudo docker exec confs-10000_python_1 bash -c "/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
     # - name: toy example test
