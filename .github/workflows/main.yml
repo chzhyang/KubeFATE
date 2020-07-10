@@ -76,7 +76,7 @@ jobs:
         # echo "# Run deploy shell"
         # bash docker_deploy.sh all
 
-        
+        sleep 30s
         for ((i=1; i<=100; i ++))
         do
             echo "# $i"
@@ -84,7 +84,7 @@ jobs:
         done
 
         
-        sleep 30s
+        
         sudo docker ps
         #docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
