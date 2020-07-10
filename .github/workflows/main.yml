@@ -80,7 +80,7 @@ jobs:
         for ((i=1; i<=100; i ++))
         do
             echo "# $i"
-            docker logs config_10000_python
+            docker logs config_10000_python | grep "Running on http://0.0.0.0:9380/"
         done
 
         
