@@ -19,9 +19,9 @@ jobs:
         sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
         echo "# conf prepare is ok"
         
-        echo "# generate config:"
+        echo "# generate config"
         bash generate_config.sh
-        echo "#check ./docker-deploy/outputs:"
+        echo "#check ./docker-deploy/outputs"
         ls ./outputs
         cd ../
 #      - uses: ./action-dockerdeploy
@@ -74,12 +74,13 @@ jobs:
         # sed -i "/eeooff/d" docker_deploy.sh
         # echo "# Run deploy shell"
         # bash docker_deploy.sh all
-        
+
         sleep 60s
         sudo docker ps
         #docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
         sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
+        echo "test is ok!"
     # - name: toy example test
     #   if: success()
     #   run: |
