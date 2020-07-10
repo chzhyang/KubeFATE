@@ -10,7 +10,7 @@ jobs:
     - name: generate conf
       if: success()
       run: |
-        echo "# conf prepare"
+        echo "# config prepare"
         cd ./docker-deploy
         host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
         sed -i "/mysql_user=fate/ ! s/user=fate/user=root/g" ./parties.conf
@@ -18,7 +18,7 @@ jobs:
         sed -i "s/partyiplist=(192.168.1.1 192.168.1.2)/partyiplist=(${host_ip})/g" ./parties.conf
         sed -i "s/servingiplist=(192.168.1.1 192.168.1.2)/servingiplist=(${host_ip})/g" ./parties.conf
         cat ./parties.conf
-        echo "# conf prepare is ok"
+        echo "# config prepare is ok"
         
         echo "# generate config"
         bash generate_config.sh
@@ -30,13 +30,13 @@ jobs:
     - name: docker deploy
       if: success()
       run: |
-        echo "# conf prepare"
+        echo "# config prepare"
         dir=/data/projects/fate
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
         sudo mkdir -p $dir
         sudo rm -f $dir/confs-$target_party_id.tar $dir/serving-$target_party_id.tar
-        echo "# conf is ok!"
+        echo "# config is ok!"
 
         echo "# training cluster and serving cluster copy begin"
         cd ./docker-deploy
