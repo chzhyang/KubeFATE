@@ -31,9 +31,6 @@ jobs:
       if: success()
       run: |
         echo "# conf prepare"
-        
-        # ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}' | cut -d "/" -f1
-        # source ./docker-deploy/parties.conf
         dir=/data/projects/fate
         target_party_id=10000
         target_party_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
@@ -43,7 +40,6 @@ jobs:
 
         echo "# training cluster and serving cluster copy begin"
         cd ./docker-deploy
-        # cat parties.conf
         sudo cp ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar $dir/
         sudo rm -f ./outputs/confs-$target_party_id.tar ./outputs/serving-$target_party_id.tar
         echo "# training cluster and serving cluster copy is ok!"
@@ -69,29 +65,12 @@ jobs:
         sudo rm -f serving-$target_party_id.tar
         echo "# party $target_party_id serving cluster deploy is ok!"
 
-        # echo "#replace scp with cp, delete ssh"
-        # cp docker_deploy.sh docker_deploy.sh.bk
-        # sed -i "s/scp \${/cp \${/g" docker_deploy.sh
-        # sed -i "/eeooff/d" docker_deploy.sh
-        # echo "# Run deploy shell"
-        # bash docker_deploy.sh all
-
+        echo "# sleep 30s, then check containers"
         sleep 30s
         sudo docker ps
-        # for ((i=1; i<=100; i ++))
-        # do
-        #     echo "# $i"
-        #     docker logs confs-10000_python_1
-        # done
 
         # docker exec confs-10000_python_1 /data/projects/python/venv/bin/pip list
         echo "# toy_example test"
-        sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
-        
+        sudo docker exec confs-10000_python_1 bash -c "source /data/projects/python/venv/bin/activate&&/data/projects/python/venv/bin/python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"        
         echo "test is ok!"
-    # - name: toy example test
-    #   if: success()
-    #   run: |
-    #     echo "# toy_example test"
-    #     sudo docker exec confs-10000_python_1 bash -c "python /data/projects/fate/python/examples/toy_example/run_toy_example.py 10000 10000 1"
         
