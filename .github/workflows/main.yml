@@ -10,6 +10,7 @@ jobs:
     - name: generate config
       if: success()
       run: |
+        pwd
         echo "# config prepare"
         cd ./docker-deploy
         host_ip=`ifconfig eth0 | grep "inet" | grep -v inet6 | awk '{ print $2}'`
