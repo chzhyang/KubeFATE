@@ -68,6 +68,7 @@ jobs:
         echo "# sleep 30s, then check containers"
         sleep 30s
         sudo docker ps
+        
     - name: toy example test
       if: success()
       run: |
