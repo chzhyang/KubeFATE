@@ -1,5 +1,5 @@
 name: A workflow for docker deploy ci
-on: push
+on: pull_request
 jobs:
   build:
     name: Docker deploy action
