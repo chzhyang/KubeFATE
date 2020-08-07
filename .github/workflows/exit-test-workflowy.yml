@@ -1,4 +1,4 @@
-name: A workflow for go test
+name: A workflow for other test
 on: [push, pull_request]
 jobs:
   build:
