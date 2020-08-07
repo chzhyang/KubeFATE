@@ -23,7 +23,7 @@ jobs:
         run: |
         cd ./k8s-deploy/pkg
         go test -v . 
-        echo "# log"
-        go test -v . > test.log
-        cat test.log
+        # echo "# log"
+        # go test -v . > test.log
+        # cat test.log
         
