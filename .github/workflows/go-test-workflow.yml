@@ -1,0 +1,27 @@
+name: A workflow for go test
+on: [push, pull_request]
+jobs:
+  build:
+    name: Go test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup go
+        uses: actions/setup-go@v1
+        with:
+            go-version: 1.14
+
+      - name: Check out source code
+        uses: actions/checkout@v1
+    #   - name: Build
+    #     env:
+    #         GOPROXY: "https://proxy.golang.org"
+    #     run: go build .
+
+      - name: Test
+        env:
+            GOPROXY: "https://proxy.golang.org"
+        run: |
+        cd ./k8s-deploy/pkg
+        go test -v .
+        echo "log:"
+        
