@@ -18,7 +18,7 @@ func Get(uri string, router *gin.Engine) *httptest.ResponseRecorder {
 	router.ServeHTTP(w, req)
 	return w
 }
-func TestRouter(t *testing.T) {
+func TestAPI(t *testing.T) {
 	body := gin.H{
 		"msg": "kubefate run success",
 	}
@@ -43,3 +43,11 @@ func TestRouter(t *testing.T) {
 	w = Get(urlv1, router)
 	assert.Equal(t, 400, w.Code)
 }
+
+// func TestJob(t *testing.T) {
+// 	router := initGinEngine()
+// 	var w *httptest.ResponseRecorder
+// 	url := "/job/"
+// 	w = Get(url, router)
+// 	assert.Equal(t, 200, w.Code)
+// }
