@@ -21,8 +21,11 @@ jobs:
         # env:
         #     GOPROXY: "https://proxy.golang.org"
         run: |
-          cd ./k8s-deploy/pkg/api
-          go test -v . 
+          cd ./k8s-deploy/pkg/
+          go test -v .
+          # go test router.go router_test.go 
+          # go test job.go job_test.go
+          
           # echo "# log"
           # go test -v . > test.log
           # cat test.log
