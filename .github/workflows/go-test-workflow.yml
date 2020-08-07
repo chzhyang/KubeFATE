@@ -20,7 +20,7 @@ jobs:
       - name: Test
         # env:
         #     GOPROXY: "https://proxy.golang.org"
-         run: |
+        run: |
         cd ./k8s-deploy/pkg
         go test -v . 
         echo "# log"
