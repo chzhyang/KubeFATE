@@ -25,6 +25,7 @@ jobs:
         echo "# check ./docker-deploy/outputs"
         ls ./outputs
         cd ../
+        echo "# ok"
 
 
     - name: docker deploy
