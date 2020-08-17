@@ -25,7 +25,8 @@ jobs:
           go test
           # go test router.go router_test.go 
           # go test job.go job_test.go
-          
+          ###
+          #### pwd
           # echo "# log"
           # go test -v . > test.log
           # cat test.log
