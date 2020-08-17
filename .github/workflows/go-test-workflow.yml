@@ -30,6 +30,9 @@ jobs:
           ###
           ###
           #### pwd
+          pwd
+          pwd
+          pwd
           # echo "# log"
           # go test -v . > test.log
           # cat test.log
