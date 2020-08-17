@@ -1,5 +1,5 @@
 name: A workflow for go test
-on: [push, pull_request]
+on: pull_request
 jobs:
   build:
     name: Go test
