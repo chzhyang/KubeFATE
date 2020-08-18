@@ -74,6 +74,7 @@ jobs:
             result=$(sudo docker ps | wc -l)
             if [ $result -eq 11 ]
             then
+                    echo "containers is ok"
                     exit 0
             fi
 
