@@ -1,5 +1,5 @@
 name: A workflow for docker deploy ci
-on: pull_request
+on: [push,pull_request]
 jobs:
   build:
     name: Docker deploy action
@@ -66,9 +66,21 @@ jobs:
         sudo rm -f serving-$target_party_id.tar
         echo "# party $target_party_id serving cluster deploy is ok!"
 
-        echo "# sleep 30s, then check containers"
-        sleep 30s
-        sudo docker ps
+        echo "# check containers"
+        # sudo docker ps
+        MAX_TRY=10
+        for (( i=1; i<=$MAX_TRY; i++ ))
+        do
+            result=$(sudo docker ps | wc -l)
+            if [ $result -eq 11 ]
+            then
+                    exit 0
+            fi
+
+            echo "Currently have containers: $result want 11"
+            sleep 3
+        done
+        exit 1
     - name: toy example test
       if: success()
       run: |
