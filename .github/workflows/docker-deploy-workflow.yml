@@ -77,8 +77,8 @@ jobs:
                     sudo docker ps
                     # services need some time to prepare
                     sleep 20s
-                    break
-                    # exit 0
+                    # break
+                    exit 0
             fi
 
             echo "# Currently have containers: $result want 11"
