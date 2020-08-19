@@ -76,15 +76,15 @@ jobs:
                     echo "# containers are ok"
                     sudo docker ps
                     # services need some time to prepare
-                    sleep 20s
-                    # break
-                    exit 0
+                    sleep 15s
+                    break
+                    # exit 0
             fi
 
             echo "# Currently have containers: $result want 11"
             sleep 3
         done
-        exit 1
+        # exit 1
 
     - name: toy example test
       if: success()
