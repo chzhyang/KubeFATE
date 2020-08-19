@@ -70,23 +70,23 @@ jobs:
         # sleep 15
         # sudo docker ps
         # echo "# test"
-        MAX_TRY=10
-        for (( i=1; i<=$MAX_TRY; i++ ))
-        do
-            result=$(sudo docker ps | wc -l)
-            if [ $result -eq 11 ]
-            then
-                    echo "# containers are ok"
-                    sudo docker ps
-                    break
-                    # exit 0
-            fi
+        # MAX_TRY=10
+        # for (( i=1; i<=$MAX_TRY; i++ ))
+        # do
+        #     result=$(sudo docker ps | wc -l)
+        #     if [ $result -eq 11 ]
+        #     then
+        #             echo "# containers are ok"
+        #             sudo docker ps
+        #             break
+        #             # exit 0
+        #     fi
 
-            echo "# Currently have containers: $result want 11"
-            sleep 3
-        done
-        echo "# sleep"
-        sleep 10s
+        #     echo "# Currently have containers: $result want 11"
+        #     sleep 3
+        # done
+        # echo "# sleep"
+        sleep 30s
         sudo docker ps
         # exit 1
     - name: toy example test
