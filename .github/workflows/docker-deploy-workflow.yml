@@ -67,9 +67,9 @@ jobs:
         echo "# party $target_party_id serving cluster deploy is ok!"
 
         echo "# check containers"
-        sleep 15
-        sudo docker ps
-        echo "# test"
+        # sleep 15
+        # sudo docker ps
+        # echo "# test"
         MAX_TRY=10
         for (( i=1; i<=$MAX_TRY; i++ ))
         do
@@ -85,6 +85,9 @@ jobs:
             echo "# Currently have containers: $result want 11"
             sleep 3
         done
+        echo "# sleep"
+        sleep 10s
+        sudo docker ps
         # exit 1
     - name: toy example test
       if: success()
