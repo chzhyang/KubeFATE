@@ -1,5 +1,5 @@
 name: A workflow for docker deploy ci
-on: [push,pull_request]
+on: pull_request
 jobs:
   build:
     name: Docker deploy action
@@ -77,13 +77,13 @@ jobs:
                     sudo docker ps
                     # services need some time to prepare
                     sleep 20s
-                    # break
                     exit 0
             fi
 
             echo "# Currently have containers: $result want 11"
             sleep 3
         done
+        echo "# containers run overtime"
         exit 1
 
     - name: toy example test
