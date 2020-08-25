@@ -16,7 +16,7 @@ jobs:
         run: |
           
           cd ./k8s-deploy/pkg/
-          go fmt -l .
+          gofmt -l .
           # go mod vendor
           # # modules-download-mode: vendor
           # curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b . latest
