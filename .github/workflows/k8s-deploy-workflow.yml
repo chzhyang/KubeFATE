@@ -1,5 +1,5 @@
 name: A workflow for go test
-on: [push,pull_request]
+on: pull_request
 jobs:
   lint:
     name: Lint
@@ -20,7 +20,7 @@ jobs:
           # curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
           ./golangci-lint run ./...
   test:
-    needs: Lint
+    # needs: Lint
     name: Test
     runs-on: ubuntu-latest
     steps:
