@@ -1,0 +1,41 @@
+name: A workflow for go test
+on: [push,pull_request]
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.14
+          id: go
+      - name: Code
+        uses: actions/checkout@v1
+      - name: Lint
+        uses: uses: golangci/golangci-lint-action@v1
+        with:
+          version: v2.2
+          working-directory: ./k8s-deploy/pkg
+          # Optional: golangci-lint command line arguments.
+          # args: --issues-exit-code=0
+          # Optional: show only new issues if it's a pull request. The default value is `false`.
+          # only-new-issues: true
+  test:
+    needs: Lint
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup go
+        uses: actions/setup-go@v1
+        with:
+            go-version: 1.14
+      - name: Code
+        uses: actions/checkout@v1
+      - name: Test
+        run: |
+          cd ./k8s-deploy/pkg/api
+          go test
+          # go test router.go router_test.go 
+          # go test job.go job_test.go
+        
