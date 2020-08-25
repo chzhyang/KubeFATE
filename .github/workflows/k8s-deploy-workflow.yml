@@ -20,7 +20,7 @@ jobs:
           # curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
           ./golangci-lint run ./...
   test:
-    # needs: Lint
+    needs: Lint
     name: Test
     runs-on: ubuntu-latest
     steps:
