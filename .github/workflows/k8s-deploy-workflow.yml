@@ -1,5 +1,5 @@
 name: A workflow for go test
-on: pull_request
+on: [push,pull_request]
 jobs:
   lint:
     name: Lint
