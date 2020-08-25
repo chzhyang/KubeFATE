@@ -13,7 +13,7 @@ jobs:
       - name: Code
         uses: actions/checkout@v1
       - name: Lint
-        uses: uses: golangci/golangci-lint-action@v1
+        uses: golangci/golangci-lint-action@v1
         with:
           version: v2.2
           working-directory: ./k8s-deploy/pkg
