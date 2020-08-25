@@ -12,7 +12,6 @@ jobs:
           id: go
       - name: Code
         uses: actions/checkout@v1
-        run: go mod vendor
       - name: Lint
         run: |
           cd ./k8s-deploy/pkg
