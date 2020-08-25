@@ -1,4 +1,4 @@
-name: A workflow for go test
+name: A workflow for k8s-deploy
 on: [push,pull_request]
 jobs:
   lint:
@@ -14,21 +14,16 @@ jobs:
         uses: actions/checkout@v1
       - name: Fmt
         run: |
-          
           cd ./k8s-deploy/pkg/
-          
           result=$(gofmt -l . | wc -l)
-          if [ $result -nq 0 ]
+          if [ $result -ne 0 ]
           then
-                    gofmt -l .
-                    exit 1
+              gofmt -l .
+              exit 1
           fi
+          echo "# fmt is ok!"
           exit 0
-          # go mod vendor
-          # # modules-download-mode: vendor
-          # curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b . latest
-          # # curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
-          # ./golangci-lint run ./... --timeout
+
   test:
     # needs: Lint
     name: Test

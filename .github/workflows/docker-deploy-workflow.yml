@@ -1,4 +1,4 @@
-name: A workflow for docker deploy ci
+name: A workflow for docker deploy
 on: [push,pull_request]
 jobs:
   build:
@@ -76,7 +76,7 @@ jobs:
                     echo "# containers are ok"
                     sudo docker ps
                     # services need some time to prepare
-                    sleep 20s
+                    sleep 30s
                     exit 0
             fi
 
