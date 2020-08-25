@@ -13,7 +13,6 @@ jobs:
       - name: Code
         uses: actions/checkout@v1
       - name: Lint
-        uses: sjkaliski/go-github-actions/fmt@v1.0.0
         run: |
           
           cd ./k8s-deploy/pkg/
