@@ -12,6 +12,7 @@ jobs:
           id: go
       - name: Code
         uses: actions/checkout@v1
+        run: go mod vendor
       - name: Lint
         uses: golangci/golangci-lint-action@v1
         with:
